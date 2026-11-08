@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SafeShot · Hide API keys and emails in screenshots before you post</title>
+<meta name="description" content="Drop a screenshot. SafeShot reads it, finds API keys, tokens, emails, phone numbers and IPs, and blurs them. Runs 100% in your browser.">
+<meta property="og:title" content="SafeShot">
+<meta property="og:description" content="Catch the API key in your screenshot before the internet does. Free, runs in your browser.">
+<meta property="og:image" content="https://lockdomain.github.io/safeshot/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='%23f59e0b'/><rect x='14' y='26' width='36' height='12' rx='6' fill='%231c1408'/></svg>">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="top">
+  <div class="brand"><span class="logo"></span> SafeShot</div>
+  <a class="gh" href="https://github.com/lockdomain/safeshot" target="_blank" rel="noopener">GitHub</a>
+</header>
+
+<main class="wrap">
+  <section class="hero">
+    <h1>Catch the API key in your screenshot<br>before the internet does.</h1>
+    <p>Drop a screenshot. SafeShot reads the text on it, finds keys, tokens, emails, phone numbers and IPs, and blurs them. The image never leaves your browser.</p>
+  </section>
+
+  <section class="stage" id="stage">
+    <label class="drop" id="drop" tabindex="0">
+      <input type="file" accept="image/*" id="file" hidden>
+      <div class="drop-inner">
+        <div class="big">Drop a screenshot here</div>
+        <div class="muted">or click to choose, or paste with Ctrl+V</div>
+        <button type="button" class="ghost" id="sample">Try a sample</button>
+      </div>
+    </label>
+    <div class="editor" id="editor" hidden>
+      <div class="canvas-wrap">
+        <canvas id="view"></canvas>
+        <div class="progress" id="progress"><div class="bar" id="bar"></div><span id="ptext">Reading text…</span></div>
+      </div>
+      <aside class="side">
+        <div class="found" id="found">Scanning…</div>
+        <div class="cats" id="cats"></div>
+        <label class="lbl">Style</label>
+        <div class="seg" id="style">
+          <button data-s="blur" class="on">Blur</button>
+          <button data-s="pixel">Pixelate</button>
+          <button data-s="bar">Black bar</button>
+        </div>
+        <p class="tip">Click a box to turn it off. Drag on the image to hide anything else.</p>
+        <div class="btns">
+          <button id="download">Download PNG</button>
+          <button class="ghost" id="copy">Copy</button>
+        </div>
+        <button class="link" id="reset">Use another image</button>
+      </aside>
+    </div>
+  </section>
+
+  <section class="what">
+    <h2>What it looks for</h2>
+    <div class="grid">
+      <div><b>API keys and tokens</b><span>OpenAI, Anthropic, Stripe, GitHub, AWS, Google, Slack, JWTs, and long random strings that look like secrets</span></div>
+      <div><b>Secrets in config</b><span>Anything after <code>API_KEY=</code>, <code>token:</code>, <code>password=</code> and friends</span></div>
+      <div><b>Contact details</b><span>Emails and phone numbers</span></div>
+      <div><b>Infrastructure</b><span>IPv4 addresses and card like numbers</span></div>
+    </div>
+    <p class="muted small">Text recognition is not perfect. Always look at the result before you post. Your image is processed locally with Tesseract running in WebAssembly.</p>
+  </section>
+</main>
+<footer class="foot">Free and open source. Made by <a href="https://x.com/lockdomain" target="_blank" rel="noopener">@lockdomain</a></footer>
+<script src="https://cdn.jsdelivr.net/npm/tesseract.js@5.1.1/dist/tesseract.min.js"></script>
+<script src="detect.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
